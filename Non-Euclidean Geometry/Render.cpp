@@ -1,13 +1,16 @@
 #include "Render.hpp"
 
-// Abstract Class --------------------------------------------------------------
-Render::Render(const CameraShPtr& camera, const int width, const int height) :
-	_camera(camera),
+// Base render class -----------------------------------------------------------
+
+// Default methods -------------------------------------------------------------
+Render::Render(const int width, const int height) :
 	_width(width),
 	_height(height)
 {
-	if (width < 1 || height < 1)
-		throw std::runtime_error("Error: Render::Render()");
+	if (_width < 1 || _height < 1)
+	{
+		throw std::invalid_argument("The viewport size must be greater than one!");
+	}
 
 #ifdef _DEBUG
 	// Init RenderDoc ....
@@ -16,66 +19,75 @@ Render::Render(const CameraShPtr& camera, const int width, const int height) :
 
 Render::~Render(void) { }
 
-int Render::getWidth(void)
+// Sets methods ----------------------------------------------------------------
+void Render::setViewportWidth(int width)
+{
+	if (width < 1)
+	{
+		throw std::invalid_argument("The viewport size must be greater than one!");
+	}
+
+	_width = width;
+}
+
+void Render::setViewportHeight(int height)
+{
+	if (height < 1)
+	{
+		throw std::invalid_argument("The viewport size must be greater than one!");
+	}
+
+	_height = height;
+}
+
+void Render::setCamera(const CameraShPtr& camera)
+{
+	if (!camera)
+	{
+		throw std::invalid_argument("The camera is undefined!");
+	}
+
+	_camera = camera;
+}
+
+// Gets methods ----------------------------------------------------------------
+int Render::getViewportWidth(void)
 {
 	return _width;
 }
 
-int Render::getHeight(void)
+int Render::getViewportHeight(void)
 {
 	return _height;
 }
 
-double Render::getAspectRatio(void)
-{
-	if (_height != 0)
-		return static_cast<double>(_width) / _height;
-	return 0.0F;
-}
-
-CameraShPtr Render::getCameraShPtr(void)
+CameraShPtr Render::getCamera(void)
 {
 	return _camera;
 }
 
-void Render::setWidth(int width)
-{
-	if (width < 1)
-		throw std::runtime_error("Error: Render::setWidth()");
-	_width = width;
-}
-
-void Render::setHeight(int height)
-{
-	if (height < 1)
-		throw std::runtime_error("Error: Render::setHeight()");
-	_height = height;
-}
-
-void Render::setCameraShPtr(const CameraShPtr& camera)
-{
-	if (!camera)
-		throw std::runtime_error("Error: Render::setCameraShPtr()");
-	_camera = camera;
-}
-
 // Euclidean Geomtry -----------------------------------------------------------
-RenderEuclidean::RenderEuclidean(
-	const CameraShPtr& camera,
-	const int width,
-	const int height) : Render(camera, width, height)
-{
 
-}
+// Default methods -------------------------------------------------------------
+RenderEuclidean::RenderEuclidean(const int width, const int height) :
+	Render(width, height)
+{ }
 
 RenderEuclidean::~RenderEuclidean() { }
 
+// Custom methods --------------------------------------------------------------
+void RenderEuclidean::initRender(void)
+{
+	glViewport(0, 0, _width, _height);
+}
+
 void RenderEuclidean::updateFrame(const double deltaTime)
 {
-
+	
 }
 
 void RenderEuclidean::drawFrame(void)
 {
-
+	glClearColor(0.9f, 0.9f, 0.95f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 }

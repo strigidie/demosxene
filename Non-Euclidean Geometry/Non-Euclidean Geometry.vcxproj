@@ -104,8 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
-      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)SDL\include;$(ProjectDir)GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -118,7 +118,8 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "$(ProjectDir)SDL\lib\x64\SDL2.dll" "$(TargetDir)SDL2.dll"
-copy "$(ProjectDir)GLEW\lib\x64\glew32.dll" "$(TargetDir)glew32.dll"</Command>
+copy "$(ProjectDir)GLEW\lib\x64\glew32.dll" "$(TargetDir)glew32.dll"
+xcopy "$(ProjectDir)Asset\" "$(TargetDir)Asset\" /s /y /e</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -145,6 +146,7 @@ copy "$(ProjectDir)GLEW\lib\x64\glew32.dll" "$(TargetDir)glew32.dll"</Command>
     <ClInclude Include="GLEW\include\wglew.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Render.hpp" />
+    <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SDL\include\begin_code.h" />
     <ClInclude Include="SDL\include\close_code.h" />
     <ClInclude Include="SDL\include\SDL.h" />
@@ -223,6 +225,7 @@ copy "$(ProjectDir)GLEW\lib\x64\glew32.dll" "$(TargetDir)glew32.dll"</Command>
     <ClInclude Include="SDL\include\SDL_version.h" />
     <ClInclude Include="SDL\include\SDL_video.h" />
     <ClInclude Include="SDL\include\SDL_vulkan.h" />
+    <ClInclude Include="Shader.hpp" />
     <ClInclude Include="Vector.hpp" />
     <ClInclude Include="Window.hpp" />
   </ItemGroup>
@@ -231,6 +234,8 @@ copy "$(ProjectDir)GLEW\lib\x64\glew32.dll" "$(TargetDir)glew32.dll"</Command>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>

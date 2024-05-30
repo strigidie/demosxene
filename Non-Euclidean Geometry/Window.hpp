@@ -7,12 +7,12 @@
 #define SDL_MAIN_HANDLED
 #include "SDL.h"
 
+using SDLWindowShPtr = std::shared_ptr<SDL_Window>;
+using SDLContextShPtr = std::shared_ptr<void>;
+
 #include "Render.hpp"
 
 #define M_WINDOW_NAME "Non-Euclidian Geometry"
-
-using SDLWindowShPtr = std::shared_ptr<SDL_Window>;
-using SDLContextShPtr = std::shared_ptr<void>;
 
 // SDL2 Window
 class Window

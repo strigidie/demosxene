@@ -252,6 +252,8 @@
     <ClInclude Include="GLEW\include\wglew.h">
       <Filter>GLEW</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="Scene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -260,6 +262,8 @@
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SDL">

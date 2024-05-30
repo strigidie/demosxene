@@ -4,49 +4,60 @@
 #include <memory>
 
 #include "glew.h"
+#include "SDL_opengl.h"
 
 #include "Camera.hpp"
+#include "Object.hpp"
 
-// Abstract class for further declaring of different geometries
+#define M_VIEWPORT_WIDTH 800
+#define M_VIEWPORT_HEIGHT 600
+
+// Base class for further declaring of different geometries
 class Render
 {
-private:
-	// Viewport Size
+protected:
 	int _width;
 	int _height;
 
 	CameraShPtr _camera;
 
 public:
-	explicit Render(const CameraShPtr& camera, const int width, const int height);
+	// Default methods ---------------------------------------------------------
+	explicit Render(const int width, const int height);
 	virtual ~Render(void);
 
-	virtual void updateFrame(const double deltaTime) = 0;
+	// Sets methods ------------------------------------------------------------
+	void setViewportWidth(int width);
+	void setViewportHeight(int height);
+	void setCamera(const CameraShPtr& camera);
+
+	// Gets methods ------------------------------------------------------------
+	int getViewportWidth(void);
+	int getViewportHeight(void);
+	CameraShPtr getCamera(void);
+
+	// Custom methods ----------------------------------------------------------
+	virtual void initRender(void) = 0;
+	virtual void updateFrame(const double delta_time) = 0;
 	virtual void drawFrame(void) = 0;
-
-	// Gets methods
-	int getWidth(void);
-	int getHeight(void);
-	double getAspectRatio(void);
-
-	CameraShPtr getCameraShPtr(void);
-
-	// Sets methods
-	void setWidth(int width);
-	void setHeight(int height);
-	void setCameraShPtr(const CameraShPtr& camera);
 };
 
 // Default Euclidean geometry
 class RenderEuclidean : public Render
 {
 public:
-	explicit RenderEuclidean(const CameraShPtr& camera, const int width, const int height);
+	// Default methods ---------------------------------------------------------
+	explicit RenderEuclidean(const int width, const int height);
 	~RenderEuclidean(void);
 
-	void updateFrame(const double deltaTime) override;
+	// Custom methods ----------------------------------------------------------
+	void initRender(void) override;
+	void updateFrame(const double delta_time) override;
 	void drawFrame(void) override;
 };
+
+// Declare Spherical Non-Euclidean geometry
+class RenderSpherical;
 
 // Let's declare a render as shared resource
 using RenderShPtr = std::shared_ptr<Render>;
